@@ -16,10 +16,12 @@ refreshenv
 # Visual Studio Code (which is free), and latest SQL Server Management Studio (also free)
 # Fiddler4 and PostMan
 # PowerBI Desktop
-choco install -y --allow-empty-checksums git GoogleChrome powershell visualstudiocode sql-server-management-studio postman fiddler4 powerbi
+# SharePoint Online Management Shell (officedevtools)
+choco install -y --allow-empty-checksums git GoogleChrome powershell visualstudiocode sql-server-management-studio postman fiddler4 powerbi officedevtools
 
 #Install the Azure Resource Manager and SharePoint PNP Powershell modules
 Install-Module AzureRM -AllowClobber
 Install-Module SharePointPnPPowerShellOnline -AllowClobber
+
 
 Set-ExecutionPolicy RemoteSigned
