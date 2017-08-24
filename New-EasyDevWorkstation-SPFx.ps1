@@ -20,5 +20,16 @@ choco install -y --allow-empty-checksums git GoogleChrome powershell visualstudi
 refreshenv
 #note if these do not work, close and reopen PowerShell window as PATH hasn't updated to recognize node and npm commands
 
+#The basics: Gulp and Yeoman generator first, then the Microsoft SharePoint generator
 npm install -g yo gulp
 npm install -g @microsoft/generator-sharepoint
+
+# Also need the windows build tools to install python 2.7 and vc++build tools as Visual Studio may not be present
+# or may not have installed these components, and it's needed to build some of the spfx examples
+npm install --global --production windows-build-tools
+
+#Create a source code folder and clone the samples for SPFx available on github, this code is awesome
+cd ~/Documents
+mkdir Source
+cd Source
+git clone https://github.com/SharePoint/sp-dev-fx-webparts.git
