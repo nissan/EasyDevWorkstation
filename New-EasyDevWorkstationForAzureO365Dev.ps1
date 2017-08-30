@@ -60,40 +60,40 @@ choco install -y --allow-empty-checksums visualstudio2017-workload-manageddeskto
 choco install -y --allow-empty-checksums visualstudio2017-workload-managedgame
 
 #Linux development with C++
-choco install visualstudio2017-workload-nativecrossplat
+choco install -y --allow-empty-checksums visualstudio2017-workload-nativecrossplat
 
 #Desktop development with C++
-choco upgrade visualstudio2017-workload-nativedesktop
+choco upgrade -y --allow-empty-checksums visualstudio2017-workload-nativedesktop
 
 #Game development with C++
-choco install visualstudio2017-workload-nativegame
+choco install -y --allow-empty-checksums visualstudio2017-workload-nativegame
 
 #Mobile development with C++
-choco install visualstudio2017-workload-nativemobile
+choco install -y --allow-empty-checksums visualstudio2017-workload-nativemobile
 
 #.Net Core Cross platform development
-choco install visualstudio2017-workload-netcoretools
+choco install -y --allow-empty-checksums visualstudio2017-workload-netcoretools
 
 #Mobile development with .NET
-choco install visualstudio2017-workload-netcrossplat
+choco install -y --allow-empty-checksums visualstudio2017-workload-netcrossplat
 
 #ASP.Net and web development
-choco install visualstudio2017-workload-netweb
+choco install -y --allow-empty-checksums visualstudio2017-workload-netweb
 
 #Node.js development
-choco install visualstudio2017-workload-node
+choco install -y --allow-empty-checksums visualstudio2017-workload-node
 
 #Office/SharePoint development
-choco install visualstudio2017-workload-office
+choco install -y --allow-empty-checksums visualstudio2017-workload-office
 
 #Universal Windows Platform Development
-choco install visualstudio2017-workload-universal
+choco install -y --allow-empty-checksums visualstudio2017-workload-universal
 
 #Visual Studio extension development
-choco install visualstudio2017-workload-visualstudioextension
+choco install -y --allow-empty-checksums visualstudio2017-workload-visualstudioextension
 
 #Mobile development with Javascript
-choco install visualstudio2017-workload-webcrossplat
+choco install -y --allow-empty-checksums visualstudio2017-workload-webcrossplat
 
 #Install the Azure Resource Manager and SharePoint PNP Powershell modules
 Install-Module AzureRM -AllowClobber
