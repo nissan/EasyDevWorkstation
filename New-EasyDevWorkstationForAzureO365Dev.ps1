@@ -28,7 +28,7 @@ refreshenv
 # PowerBI Desktop
 # nodejs is essential for building SPFx webparts, as required components installed via npm (Node Package Manager)
 
-choco install -y --allow-empty-checksums git GoogleChrome powershell visualstudiocode sql-server-management-studio postman fiddler4 powerbi microsoftazurestorageexplorer nodejs
+choco install -y --allow-empty-checksums git GoogleChrome powershell visualstudiocode sql-server-management-studio postman fiddler4 powerbi microsoftazurestorageexplorer nodejs cmder
 
 
 #Install Visual Studio 2017 and the workloads for Azure and Web Development
@@ -110,10 +110,11 @@ npm install -g @microsoft/generator-sharepoint
 # or may not have installed these components, and it's needed to build some of the spfx examples
 npm install --global --production windows-build-tools
 
-#Create a source code folder and clone the samples for SPFx available on github, this code is awesome
+#Create a source code folder and clone the samples for SPFx Webparts and Extensions samples available on github, this code is awesome
 cd ~/Documents
 mkdir Source
 cd Source
 mkdir Repos
 cd Repos
 git clone https://github.com/SharePoint/sp-dev-fx-webparts.git
+git clone https://github.com/SharePoint/sp-dev-fx-extensions.git
