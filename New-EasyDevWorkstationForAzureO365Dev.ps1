@@ -14,14 +14,96 @@ refreshenv
 
 #Install the basics - Git, Chrome browser, updated Powershell (if running on older Windows like Win Server 2008R2)
 # Visual Studio Code (which is free), and latest SQL Server Management Studio (also free)
-# Fiddler4 and PostMan
+# Utilities like Microsoft Azure Storage Explorer, Postman and Fiddler are handy to have
 # PowerBI Desktop
-# SharePoint Online Management Shell (officedevtools)
-choco install -y --allow-empty-checksums git GoogleChrome powershell visualstudiocode sql-server-management-studio postman fiddler4 powerbi officedevtools
+# nodejs is essential for building SPFx webparts, as required components installed via npm (Node Package Manager)
+
+choco install -y --allow-empty-checksums git GoogleChrome powershell visualstudiocode sql-server-management-studio postman fiddler4 powerbi microsoftazurestorageexplorer nodejs
+
+
+#Install Visual Studio 2017 and the workloads for Azure and Web Development
+
+# To use another version of Visual Studio uncomment the line as appropriate
+
+#Community edition
+#choco install -y --allow-empty-checksums visualstudio2017community
+
+#Professional edition
+#choco install -y --allow-empty-checksums visualstudio2017professional
+
+#Install enterprise edition of Visual Studio 2017
+choco install -y --allow-empty-checksums visualstudio2017enterprise
+
+#Comment and uncomment workloads to install for Visual Studio as appropriate
+#More information on workloads can be found at https://www.visualstudio.com/vs/visual-studio-workloads/
+
+#Azure development
+choco install -y --allow-empty-checksums visualstudio2017-workload-azure
+
+# Data storage and processing
+choco install -y --allow-empty-checksums visualstudio2017-workload-data
+
+#.Net Desktop development
+choco install -y --allow-empty-checksums visualstudio2017-workload-manageddesktop
+
+#Game development with Unity workload
+choco install -y --allow-empty-checksums visualstudio2017-workload-managedgame
+
+#Linux development with C++
+choco install visualstudio2017-workload-nativecrossplat
+
+#Desktop development with C++
+choco upgrade visualstudio2017-workload-nativedesktop
+
+#Game development with C++
+choco install visualstudio2017-workload-nativegame
+
+#Mobile development with C++
+choco install visualstudio2017-workload-nativemobile
+
+#.Net Core Cross platform development
+choco install visualstudio2017-workload-netcoretools
+
+#Mobile development with .NET
+choco install visualstudio2017-workload-netcrossplat
+
+#ASP.Net and web development
+choco install visualstudio2017-workload-netweb
+
+#Node.js development
+choco install visualstudio2017-workload-node
+
+#Office/SharePoint development
+choco install visualstudio2017-workload-office
+
+#Universal Windows Platform Development
+choco install visualstudio2017-workload-universal
+
+#Visual Studio extension development
+choco install visualstudio2017-workload-visualstudioextension
+
+#Mobile development with Javascript
+choco install visualstudio2017-workload-webcrossplat
 
 #Install the Azure Resource Manager and SharePoint PNP Powershell modules
 Install-Module AzureRM -AllowClobber
 Install-Module SharePointPnPPowerShellOnline -AllowClobber
 
+refreshenv
+#note if these do not work, close and reopen PowerShell window as PATH hasn't updated to recognize node and npm commands
 
-Set-ExecutionPolicy RemoteSigned
+#The basics: Gulp and Yeoman generator first, then the Microsoft SharePoint generator
+npm install -g yo gulp
+npm install -g @microsoft/generator-sharepoint
+
+# Also need the windows build tools to install python 2.7 and vc++build tools as Visual Studio may not be present
+# or may not have installed these components, and it's needed to build some of the spfx examples
+npm install --global --production windows-build-tools
+
+#Create a source code folder and clone the samples for SPFx available on github, this code is awesome
+cd ~/Documents
+mkdir Source
+cd Source
+mkdir Repos
+cd Repos
+git clone https://github.com/SharePoint/sp-dev-fx-webparts.git
