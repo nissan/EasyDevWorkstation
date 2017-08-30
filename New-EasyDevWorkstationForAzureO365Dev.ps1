@@ -1,8 +1,18 @@
 #Script Name: New-EasyDevWorkstation.ps1
 #Purpose: Quick and clean way to setup a simple developer workstation. Tested only for Windows 10
 #Author Nissan Dookeran
-#Date 23-06-2016
-#Version 0.01
+#Date 30-08-2017
+#Version 0.03
+
+#ChangeLog
+# 0.03 
+# Remove
+# officedevtools
+#
+# Add
+# Visual Studio full suite reference
+# SPFx required components
+# Merge the SPFx script into this one.
 
 #set the execution policy to allow chocolatey to install and chocolatey scripts to install software
 #Use ByPass to avoid prompts when installing PowerShell modules
