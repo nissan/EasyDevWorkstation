@@ -2,9 +2,16 @@
 #Purpose: Quick and clean way to setup a simple developer workstation. Tested only for Windows 10
 #Author Nissan Dookeran
 #Date 30-08-2017
-#Version 0.03
+#Version 0.03.1
 
 #ChangeLog
+# 0.03.1
+# Add
+# jq
+# cmder
+# resharper
+# Enable chocolatey feature to allows say yes to prompts so won't pause during execution
+#
 # 0.03 
 # Remove
 # officedevtools
@@ -22,13 +29,17 @@ Set-ExecutionPolicy Bypass
 iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
 refreshenv
 
+#Enable global confirmations so no prompting to stop deployment
+choco feature enable -n allowGlobalConfirmation
+
+
 #Install the basics - Git, Chrome browser, updated Powershell (if running on older Windows like Win Server 2008R2)
 # Visual Studio Code (which is free), and latest SQL Server Management Studio (also free)
 # Utilities like Microsoft Azure Storage Explorer, Postman and Fiddler are handy to have
 # PowerBI Desktop
 # nodejs is essential for building SPFx webparts, as required components installed via npm (Node Package Manager)
-
-choco install -y --allow-empty-checksums git GoogleChrome powershell visualstudiocode sql-server-management-studio postman fiddler4 powerbi microsoftazurestorageexplorer nodejs cmder
+#jq is a powerful command line tool for parsing JSON files
+choco install -y --allow-empty-checksums git GoogleChrome powershell visualstudiocode sql-server-management-studio postman fiddler4 powerbi microsoftazurestorageexplorer nodejs cmder jq
 
 
 #Install Visual Studio 2017 and the workloads for Azure and Web Development
@@ -95,6 +106,10 @@ choco install -y --allow-empty-checksums visualstudio2017-workload-visualstudioe
 #Mobile development with Javascript
 choco install -y --allow-empty-checksums visualstudio2017-workload-webcrossplat
 
+#If you have the license for it, Resharper's a good VS add-in to have
+choco install -y --allow-empty-checksum resharper
+
+
 #Install the Azure Resource Manager and SharePoint PNP Powershell modules
 Install-Module AzureRM -AllowClobber
 Install-Module SharePointPnPPowerShellOnline -AllowClobber
@@ -110,7 +125,7 @@ npm install -g @microsoft/generator-sharepoint
 # or may not have installed these components, and it's needed to build some of the spfx examples
 npm install --global --production windows-build-tools
 
-#Create a source code folder and clone the samples for SPFx Webparts and Extensions samples available on github, this code is awesome
+#Create a source code folder and clone the samples for SPFx available on github, this code is awesome
 cd ~/Documents
 mkdir Source
 cd Source
