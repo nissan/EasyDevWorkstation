@@ -5,6 +5,10 @@
 #Version 0.03.1
 
 #ChangeLog
+# 0.03.2
+# Add
+# Visual Studio code extensions for C#, Chrome debugging, Powershell
+# and a Markdown theming kit for VSCode
 # 0.03.1
 # Add
 # jq
@@ -39,8 +43,21 @@ choco feature enable -n allowGlobalConfirmation
 # PowerBI Desktop
 # nodejs is essential for building SPFx webparts, as required components installed via npm (Node Package Manager)
 #jq is a powerful command line tool for parsing JSON files
-choco install -y --allow-empty-checksums git GoogleChrome powershell visualstudiocode sql-server-management-studio postman fiddler4 powerbi microsoftazurestorageexplorer nodejs cmder jq
+choco install -y --allow-empty-checksums git GoogleChrome powershell sql-server-management-studio postman fiddler4 powerbi microsoftazurestorageexplorer nodejs cmder jq
 
+# Install Visual Studio Code and install common extensions needed
+choco install -y --allow-empty-checksums visualstudiocode
+RefreshEnv.cmd
+# Referenced https://code.visualstudio.com/docs/editor/extension-gallery 
+# installing extensions via command line
+# C#
+# Powershell
+# Debugger for chrome
+# Markdown theme kit (a theme I prefer)
+code --install-extension ms-vscode.csharp
+code --install-extension ms-vscode.PowerShell
+code --install-extension msjsdiag.debugger-for-chrome
+code --install-extension ms-vscode.Theme-MarkdownKit
 
 #Install Visual Studio 2017 and the workloads for Azure and Web Development
 
