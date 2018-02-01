@@ -150,6 +150,8 @@ Install-Module SharePointPnPPowerShellOnline -AllowClobber
 refreshenv
 #note if these do not work, close and reopen PowerShell window as PATH hasn't updated to recognize node and npm commands
 #The basics: Gulp and Yeoman generator first, then the Microsoft SharePoint generator
+#RefreshEnv doesn't allow code to be found, next line will fix this.
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
 npm install -g yo gulp
 npm install -g @microsoft/generator-sharepoint
