@@ -3,6 +3,7 @@
 Quick and clean way to setup a simple developer workstation. Tested only for Windows 10. Modified to work with Readify environment
 
 .NOTES
+MUST RUN AS ADMINISTRATOR AS WINDOWS FEATURES ARE POSSIBLY INSTALLED
 Script Name: New-EasyDevWorkstation.ps1
 
 Purpose: Quick and clean way to setup a simple developer workstation. Tested only for Windows 10. Modified to work with Readify environment
@@ -22,6 +23,11 @@ Modified
 Add 
 - switch to install Office 365 Pro Plus (32 bit), Microsoft Teams 32-bit desktop app, Slack desktop app as installed
 - install the Angular CLI
+- install the Hyper-V feature if not enabled (useful for docker work)
+- install Docker CE for Windows
+
+Remove
+- git cloning of SPFx samples repositories
 
 TODO # Add Office 365 64bit, Teams 64 bit and Yammer 64-bit software as part of installation, no chocolatey package exists for these yet
 
@@ -236,10 +242,15 @@ npm install -g @angular/cli
 npm install --global --production windows-build-tools
 
 #Create a source code folder and clone the samples for SPFx available on github, this code is awesome
-cd ~/Documents
-mkdir Source
-cd Source
-mkdir Repos
-cd Repos
-git clone https://github.com/SharePoint/sp-dev-fx-webparts.git
-git clone https://github.com/SharePoint/sp-dev-fx-extensions.git
+# cd ~/Documents
+# mkdir Source
+# cd Source
+# mkdir Repos
+# cd Repos
+# git clone https://github.com/SharePoint/sp-dev-fx-webparts.git
+# git clone https://github.com/SharePoint/sp-dev-fx-extensions.git
+
+
+#Install Hyper-V Windows Feature (if not yet installed) then install Docker
+Enable-WindowsOptionalFeature -Online -FeatureName:Microsoft-Hyper-V -All
+choco install -y --allow-empty-checksums docker-for-windows
