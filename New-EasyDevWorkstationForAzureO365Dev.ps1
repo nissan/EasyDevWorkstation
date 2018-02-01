@@ -4,13 +4,17 @@
 
 #Author Nissan Dookeran
 
-#Date 30-08-2017
+#Date 26-10-2017
 
-#Version 0.03.4
+#Version 0.03.5
 
 
 
 #ChangeLog
+# 0.03.5
+# Add docker toolbox for management of containers
+# Replace nodejs with nvm, so that multiple versions of nodejs can be installed.
+# Add commands for nvm to install and use latest version available of nodejs
 # 0.03.4
 # Fix
 # Adjust execution policy to "RemoteSigned" from "Bypass"
@@ -54,11 +58,13 @@ choco feature enable -n allowGlobalConfirmation
 # Visual Studio Code (which is free), and latest SQL Server Management Studio (also free)
 # Utilities like Microsoft Azure Storage Explorer, Postman and Fiddler are handy to have
 # PowerBI Desktop
-# nodejs is essential for building SPFx webparts, as required components installed via npm (Node Package Manager)
+# nodejs is essential for building SPFx webparts, as required components installed via npm (Node Package Manager),
+# install nodist to allow installation of multiple versions of nodejs
 #jq is a powerful command line tool for parsing JSON files
-choco install -y --allow-empty-checksums git GoogleChrome powershell sql-server-management-studio postman fiddler4 powerbi microsoftazurestorageexplorer nodejs cmder jq
+choco install -y --allow-empty-checksums git GoogleChrome powershell sql-server-management-studio postman fiddler4 powerbi microsoftazurestorageexplorer nvm cmder jq
 # Install Jetbrains Toolbox, Visual Studio Code and install common extensions needed
-choco install -y --allow-empty-checksums visualstudiocode jetbrainstoolbox
+# Install docker-toolbox to setup containers as needed
+choco install -y --allow-empty-checksums visualstudiocode jetbrainstoolbox docker-toolbox
 RefreshEnv.cmd
 #RefreshEnv doesn't allow code to be found, next line will fix this.
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
@@ -102,19 +108,19 @@ choco install -y --allow-empty-checksums visualstudio2017-workload-data
 choco install -y --allow-empty-checksums visualstudio2017-workload-manageddesktop
 
 #Game development with Unity workload
-choco install -y --allow-empty-checksums visualstudio2017-workload-managedgame
+#choco install -y --allow-empty-checksums visualstudio2017-workload-managedgame
 
 #Linux development with C++
-choco install -y --allow-empty-checksums visualstudio2017-workload-nativecrossplat
+#choco install -y --allow-empty-checksums visualstudio2017-workload-nativecrossplat
 
 #Desktop development with C++
-choco upgrade -y --allow-empty-checksums visualstudio2017-workload-nativedesktop
+#choco upgrade -y --allow-empty-checksums visualstudio2017-workload-nativedesktop
 
 #Game development with C++
-choco install -y --allow-empty-checksums visualstudio2017-workload-nativegame
+#choco install -y --allow-empty-checksums visualstudio2017-workload-nativegame
 
 #Mobile development with C++
-choco install -y --allow-empty-checksums visualstudio2017-workload-nativemobile
+#choco install -y --allow-empty-checksums visualstudio2017-workload-nativemobile
 
 #.Net Core Cross platform development
 choco install -y --allow-empty-checksums visualstudio2017-workload-netcoretools
@@ -126,19 +132,19 @@ choco install -y --allow-empty-checksums visualstudio2017-workload-netcrossplat
 choco install -y --allow-empty-checksums visualstudio2017-workload-netweb
 
 #Node.js development
-choco install -y --allow-empty-checksums visualstudio2017-workload-node
+#choco install -y --allow-empty-checksums visualstudio2017-workload-node
 
 #Office/SharePoint development
 choco install -y --allow-empty-checksums visualstudio2017-workload-office
 
 #Universal Windows Platform Development
-choco install -y --allow-empty-checksums visualstudio2017-workload-universal
+#choco install -y --allow-empty-checksums visualstudio2017-workload-universal
 
 #Visual Studio extension development
-choco install -y --allow-empty-checksums visualstudio2017-workload-visualstudioextension
+#choco install -y --allow-empty-checksums visualstudio2017-workload-visualstudioextension
 
 #Mobile development with Javascript
-choco install -y --allow-empty-checksums visualstudio2017-workload-webcrossplat
+#choco install -y --allow-empty-checksums visualstudio2017-workload-webcrossplat
 
 #If you have the license for it, Resharper's a good VS add-in to have
 choco install -y --allow-empty-checksum resharper
@@ -149,6 +155,12 @@ Install-Module SharePointPnPPowerShellOnline -AllowClobber
 
 refreshenv
 #note if these do not work, close and reopen PowerShell window as PATH hasn't updated to recognize node and npm commands
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
+#This should work if refreshenv does not
+
+#install latest nodejs and activate
+nvm install latest
+nvm use latest
 #The basics: Gulp and Yeoman generator first, then the Microsoft SharePoint generator
 #RefreshEnv doesn't allow code to be found, next line will fix this.
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
