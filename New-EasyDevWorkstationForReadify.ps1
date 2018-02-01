@@ -25,6 +25,7 @@ Add
 - install the Angular CLI
 - install the Hyper-V feature if not enabled (useful for docker work)
 - install Docker CE for Windows
+- firefox
 
 Remove
 - git cloning of SPFx samples repositories
