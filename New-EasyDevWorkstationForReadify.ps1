@@ -68,6 +68,9 @@ SPFx required components
 Merge the SPFx script into this one.
 
 #>
+param(
+    [parameter(Mandatory=$false)] [bool] $Use32BitSoftware
+)
 Write-Host @"
 ___________                                                                          
 \_   _____/____    _________.__.                                                     
@@ -101,9 +104,6 @@ ___________            __________                   .___.__  _____
      \/                        \/     \/     \/      \/           \/                 
 "@
 
-param(
-    [parameter(Mandatory=$false)] [bool] $Use32BitSoftware
-)
 #set the execution policy to allow chocolatey to install and chocolatey scripts to install software
 #Use RemoteSigned to avoid prompts when installing PowerShell modules
 Set-ExecutionPolicy RemoteSigned
