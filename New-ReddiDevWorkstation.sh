@@ -1,6 +1,15 @@
 #!/bin/bash
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+#Install mac-specific build tools
+xcode-select --install
+
+#install prerequisites
+brew install automake autoconf apple-gcc42 openssl
+
+#install java
+brew cask install java
+
 #Install browsers
 brew install caskroom/cask/google-chrome
 brew install caskroom/cask/firefox
@@ -10,9 +19,6 @@ brew install git
 
 #Install jetbrains toolbox for managing what IDEs installed
 brew install caskroom/cask/jetbrains-toolbox
-
-#Install mac-specific build tools
-xcode-select --install
 
 #Install communication tools
 brew install caskroom/cask/slack
