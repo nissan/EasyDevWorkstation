@@ -9,6 +9,7 @@ brew install automake autoconf apple-gcc42 openssl
 
 #install java
 brew cask install java
+brew install caskroom/cask/intellij-idea
 
 #Install browsers
 brew install caskroom/cask/google-chrome
@@ -36,26 +37,27 @@ echo "export NVM_DIR=~/.nvm" >>~/.bash_profile
 echo "source $(brew --prefix nvm)/nvm.sh">> ~/.bash_profile
 source ~/.bash_profile
 
-# Install for angular development
-nvm install 9.5.0
-nvm use 9.5.0
-
-
-# Install Angular CLI
-npm install -g @angular/cli
-
 #Install SPFx
+nvm install 6.11.5
+nvm use 6.11.5 #needed for spfx compatibility for now
 npm install -g yo gulp
 npm install -g @microsoft/generator-sharepoint
 
+# Install Angular CLI
+nvm install 9.5.0
+nvm use 9.5.0
+npm install -g @angular/cli
+
+brew install caskroom/cask/webstorm
+
 #Install go packages
 brew install go
-
+brew install caskroom/cask/goland
 
 #Install python packages
 brew install python3
 brew install caskroom/cask/anaconda
-brew install pycharm
+brew install caskroom/cask/pycharm
 
 #Install ruby packages
 #################
@@ -69,6 +71,7 @@ gpg --verify rvm-installer.asc &&
 # Run the installer
 bash rvm-installer stable
 ###################
+brew install caskroom/cask/rubymine
 
 #Install IDEs
 brew install caskroom/cask/visual-studio-code
@@ -85,5 +88,6 @@ code --install-extension ms-vscode.Theme-MarkdownKit
 
 brew install caskroom/cask/visual-studio
 
+brew install caskroom/cask/parallels
 
 
