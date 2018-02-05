@@ -31,11 +31,16 @@ brew install jq
 
 #Install for node or javascript frameworks development
 brew install nvm
+mkdir ~/.nvm
+echo "export NVM_DIR=~/.nvm" >>~/.bash_profile
+echo "source $(brew --prefix nvm)/nvm.sh">> ~/.bash_profile
 source ~/.bash_profile
 
 # Install for angular development
 nvm install 9.5.0
 nvm use 9.5.0
+
+
 # Install Angular CLI
 npm install -g @angular/cli
 
@@ -50,6 +55,7 @@ brew install go
 #Install python packages
 brew install python3
 brew install caskroom/cask/anaconda
+brew install pycharm
 
 #Install ruby packages
 #################
