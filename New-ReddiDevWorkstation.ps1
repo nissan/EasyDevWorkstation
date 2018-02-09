@@ -11,26 +11,20 @@ Quick and clean way to setup a simple developer workstation. Tested only for Win
 MUST RUN AS ADMINISTRATOR AS WINDOWS FEATURES ARE POSSIBLY INSTALLED
 
 Script Name: New-ReddiDevWorkstation.ps1
-
-
-
 Purpose: Quick and clean way to setup a simple developer workstation. Tested only for Windows 10. Highly opinionated to tools I would use in my environment.
-
-
 Author Nissan Dookeran
-
-
-
 Date 26-10-2017
+Date Last Modified: 09-02-2018
 
 
-
-Version 1.00
-
+Version 1.01
+Add Xming 
 
 
 ChangeLog
-
+1.01
+Add
+-xM
 1.00
 
 Modified 
@@ -379,6 +373,9 @@ if ($InstallOffice32bit)
 #Need to follow up with steps from https://docs.microsoft.com/en-us/windows/wsl/install-win10
 if ($ConfigureLinuxSubsystem)
 {
+    # XMing is an X-Window server that will allow graphical Linux apps 
+    # like Firefox to run if installed via apt-get or similar tool
+    choco install -y --allow-empty-checksums xming 
     Enable-WindowsOptionalFeature -Online -FeatureName Microsoft-Windows-Subsystem-Linux
 } 
 
