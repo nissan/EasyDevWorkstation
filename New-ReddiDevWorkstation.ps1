@@ -214,8 +214,9 @@ if ($InstallDocker) {
 }
 
 if ($InstallVisualStudioCode) {
+    Write-Host "Validating Visual Studio Code installed..." -BackgroundColor Magenta -ForegroundColor Black
     choco install -y --allow-empty-checksums visualstudiocode
-
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
     # Referenced https://code.visualstudio.com/docs/editor/extension-gallery 
@@ -223,17 +224,27 @@ if ($InstallVisualStudioCode) {
     # installing extensions via command line
 
     # C#
+    Write-Host "Adding Visual Studio Code C# extension..." -BackgroundColor Magenta -ForegroundColor Black
     code --install-extension ms-vscode.csharp
-
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
     # Powershell
+    Write-Host "Adding Visual Studio Code Powershell extension..." -BackgroundColor Magenta -ForegroundColor Black
     code --install-extension ms-vscode.PowerShell
-
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
     # Debugger for chrome
+    Write-Host "Adding Visual Studio Code Chrome javascript debugger extension..." -BackgroundColor Magenta -ForegroundColor Black
     code --install-extension msjsdiag.debugger-for-chrome
-
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
     # Markdown theme kit (a theme I prefer)
+    Write-Host "Adding Visual Studio Code Markdown extension..." -BackgroundColor Magenta -ForegroundColor Black
     code --install-extension ms-vscode.Theme-MarkdownKit
-
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
+    Write-Host "Adding Visual Studio Code TSLint extension..." -BackgroundColor Magenta -ForegroundColor Black
+    code --install-extension eg2.tslint
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
+    Write-Host "Adding Visual Studio Code Prettier extension..." -BackgroundColor Magenta -ForegroundColor Black
+    code --install-extension esbenp.prettier-vscode
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
 }
 
 if ($InstallVisualStudio2017Full){
