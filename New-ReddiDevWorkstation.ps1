@@ -366,7 +366,7 @@ if ($ConfigureForReactMSTDevelopment) {
     RefreshEnv.cmd
 
     #Initialize a new application via create-react-app
-    #yarn add create-react-app
+    #yarn add create-react-app npx #doesn't work as "can't find command" error, so use npm to install this instead
     if (!$NewReactAppName){
         $NewReactAppName = "new-app"
     }
