@@ -14,17 +14,24 @@ Script Name: New-ReddiDevWorkstation.ps1
 Purpose: Quick and clean way to setup a simple developer workstation. Tested only for Windows 10. Highly opinionated to tools I would use in my environment.
 Author Nissan Dookeran
 Date 26-10-2017
-Date Last Modified: 09-02-2018
+Date Last Modified: 16-02-2018
 
 
-Version 1.01
-Add Xming 
+Version 1.02
 
 
 ChangeLog
+1.02
+Modified
+- Move installation of chocolatey to a switchable parameter $InstallChocolatey
+- Move installation of basic tools to a switchable parameter $InstallBasicTools
+
+Add
+- Configuration and initial template for React/Mobx-State-Tree web application
+
 1.01
 Add
--xM
+-Add xMing
 1.00
 
 Modified 
@@ -80,10 +87,6 @@ jetbrainstoolbox to allow addition of various community IDEs like IntelliJ
 
 Remove
 
-
-
-
-
 0.03.3
 
 Fix
@@ -132,7 +135,8 @@ Merge the SPFx script into this one.
 
 #>
 param(
-
+    [parameter(Mandatory=$false)] [bool] $InstallChocolatey,
+    [parameter(Mandatory=$false)] [bool] $InstallBasicTools,
     [parameter(Mandatory=$false)] [bool] $InstallDocker,
     [parameter(Mandatory=$false)] [bool] $InstallVisualStudio2017Full,
     [parameter(Mandatory=$false)] [bool] $InstallVisualStudioCode,
@@ -140,73 +144,50 @@ param(
     [parameter(Mandatory=$false)] [bool] $ConfigureForSPFxDevelopment,
     [parameter(Mandatory=$false)] [bool] $ConfigureForPythonDevelopment,
     [parameter(Mandatory=$false)] [bool] $ConfigureForAngularDevelopment,
+    [parameter(Mandatory=$false)] [bool] $ConfigureForReactMSTDevelopment,
+    [parameter(Mandatory=$false)] [string] $NewReactAppName,
     [parameter(Mandatory=$false)] [bool] $ConfigureLinuxSubsystem,
     [parameter(Mandatory=$false)] [bool] $InstallOffice32bit
 
 )
 Write-Host @"
-
-___________                                                                          
-
-\_   _____/____    _________.__.                                                     
-
- |    __)_\__  \  /  ___<   |  |                                                     
-
- |        \/ __ \_\___ \ \___  |                                                     
-
-/_______  (____  /____  >/ ____|                                                     
-
-        \/     \/     \/ \/                                                          
-
-________                     .__                                                     
-
-\______ \   _______  __ ____ |  |   ____ ______   ___________                        
-
- |    |  \_/ __ \  \/ // __ \|  |  /  _ \\____ \_/ __ \_  __ \                       
-
- |    `   \  ___/\   /\  ___/|  |_(  <_> )  |_> >  ___/|  | \/                       
-
-/_______  /\___  >\_/  \___  >____/\____/|   __/ \___  >__|                          
-
-        \/     \/          \/            |__|        \/                              
-
- __      __             __              __          __  .__                          
-
-/  \    /  \___________|  | __  _______/  |______ _/  |_|__| ____   ____             
-
-\   \/\/   /  _ \_  __ \  |/ / /  ___/\   __\__  \\   __\  |/  _ \ /    \            
-
- \        (  <_> )  | \/    <  \___ \  |  |  / __ \|  | |  (  <_> )   |  \           
-
-  \__/\  / \____/|__|  |__|_ \/____  > |__| (____  /__| |__|\____/|___|  /           
-
-       \/                   \/     \/            \/                    \/            
-
-  _________       __                 ___________           .__     ____    _______   
-
- /   _____/ _____/  |_ __ ________   \__    ___/___   ____ |  |   /_   |   \   _  \  
-
- \_____  \_/ __ \   __\  |  \____ \    |    | /  _ \ /  _ \|  |    |   |   /  /_\  \ 
-
- /        \  ___/|  | |  |  /  |_> >   |    |(  <_> |  <_> )  |__  |   |   \  \_/   \
-
-/_______  /\___  >__| |____/|   __/    |____| \____/ \____/|____/  |___| /\ \_____  /
-
-        \/     \/           |__|                                         \/       \/ 
-
+___________                      ________                     .__                              
+\_   _____/____    _________.__. \______ \   _______  __ ____ |  |   ____ ______   ___________ 
+ |    __)_\__  \  /  ___<   |  |  |    |  \_/ __ \  \/ // __ \|  |  /  _ \\____ \_/ __ \_  __ \
+ |        \/ __ \_\___ \ \___  |  |    `   \  ___/\   /\  ___/|  |_(  <_> )  |_> >  ___/|  | \/
+/_______  (____  /____  >/ ____| /_______  /\___  >\_/  \___  >____/\____/|   __/ \___  >__|   
+        \/     \/     \/ \/              \/     \/          \/            |__|        \/       
+ __      __             __              __          __  .__                                    
+/  \    /  \___________|  | __  _______/  |______ _/  |_|__| ____   ____                       
+\   \/\/   /  _ \_  __ \  |/ / /  ___/\   __\__  \\   __\  |/  _ \ /    \                      
+ \        (  <_> )  | \/    <  \___ \  |  |  / __ \|  | |  (  <_> )   |  \                     
+  \__/\  / \____/|__|  |__|_ \/____  > |__| (____  /__| |__|\____/|___|  /                     
+       \/                   \/     \/            \/                    \/                      
+  _________       __                 ___________           .__                                 
+ /   _____/ _____/  |_ __ ________   \__    ___/___   ____ |  |                                
+ \_____  \_/ __ \   __\  |  \____ \    |    | /  _ \ /  _ \|  |                                
+ /        \  ___/|  | |  |  /  |_> >   |    |(  <_> |  <_> )  |__                              
+/_______  /\___  >__| |____/|   __/    |____| \____/ \____/|____/                              
+        \/     \/           |__|                                                               
+ ____    _______   ________                                                                    
+/_   |   \   _  \  \_____  \                                                                   
+ |   |   /  /_\  \  /  ____/                                                                   
+ |   |   \  \_/   \/       \                                                                   
+ |___| /\ \_____  /\_______ \                                                                  
+       \/       \/         \/                                                       
 "@
 
-
-iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
-
-refreshenv
+if ($InstallChocolatey) {
+    iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+    refreshenv
+}
 
 #Enable global confirmations so no prompting to stop deployment
 
 choco feature enable -n allowGlobalConfirmation
-
-choco install -y --allow-empty-checksums slack googlechrome powershell git postman nvm cmder jq jetbrainstoolbox firefox
-
+if ($InstallBasicTools) {
+    choco install -y --allow-empty-checksums slack googlechrome powershell git postman nvm cmder jq jetbrainstoolbox firefox
+}
 if ($InstallDocker) {
 #Install Hyper-V Windows Feature (if not yet installed) then install Docker
     Enable-WindowsOptionalFeature -Online -FeatureName:Microsoft-Hyper-V -All
@@ -214,8 +195,9 @@ if ($InstallDocker) {
 }
 
 if ($InstallVisualStudioCode) {
+    Write-Host "Validating Visual Studio Code installed..." -BackgroundColor Magenta -ForegroundColor Black
     choco install -y --allow-empty-checksums visualstudiocode
-
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
     $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User") 
 
     # Referenced https://code.visualstudio.com/docs/editor/extension-gallery 
@@ -223,17 +205,27 @@ if ($InstallVisualStudioCode) {
     # installing extensions via command line
 
     # C#
+    Write-Host "Adding Visual Studio Code C# extension..." -BackgroundColor Magenta -ForegroundColor Black
     code --install-extension ms-vscode.csharp
-
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
     # Powershell
+    Write-Host "Adding Visual Studio Code Powershell extension..." -BackgroundColor Magenta -ForegroundColor Black
     code --install-extension ms-vscode.PowerShell
-
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
     # Debugger for chrome
+    Write-Host "Adding Visual Studio Code Chrome javascript debugger extension..." -BackgroundColor Magenta -ForegroundColor Black
     code --install-extension msjsdiag.debugger-for-chrome
-
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
     # Markdown theme kit (a theme I prefer)
+    Write-Host "Adding Visual Studio Code Markdown extension..." -BackgroundColor Magenta -ForegroundColor Black
     code --install-extension ms-vscode.Theme-MarkdownKit
-
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
+    Write-Host "Adding Visual Studio Code TSLint extension..." -BackgroundColor Magenta -ForegroundColor Black
+    code --install-extension eg2.tslint
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
+    Write-Host "Adding Visual Studio Code Prettier extension..." -BackgroundColor Magenta -ForegroundColor Black
+    code --install-extension esbenp.prettier-vscode
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
 }
 
 if ($InstallVisualStudio2017Full){
@@ -359,6 +351,33 @@ if ($ConfigureForSPFxDevelopment)
     cd Repos
     git clone https://github.com/SharePoint/sp-dev-fx-webparts.git
     git clone https://github.com/SharePoint/sp-dev-fx-extensions.git
+
+}
+
+if ($ConfigureForReactMSTDevelopment) {
+    nvm install 9.5.0
+    nvm use 9.5.0
+    RefreshEnv.cmd
+
+    #Install Yarn, will use this for package management instead of npm
+    #you can use chocolatey to install via Yarn recommended method for installation, 
+    #but this is just simpler
+    npm i -g yarn npx create-react-app
+    RefreshEnv.cmd
+
+    #Initialize a new application via create-react-app
+    #yarn add create-react-app
+    if (!$NewReactAppName){
+        $NewReactAppName = "new-app"
+    }
+    npx create-react-app $NewReactAppName
+    cd $NewReactAppName
+
+    #Opinionated install of
+    # Create React App https://github.com/facebook/create-react-app
+    # Mobx State Tree https://github.com/mobxjs/mobx-state-tree
+    # React Form https://github.com/react-tools/react-form
+    yarn add --dev mobx mobx-react mobx-state-tree babel-plugin-transform-decorators-legacy react-form
 
 }
 
