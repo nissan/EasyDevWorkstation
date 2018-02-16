@@ -355,6 +355,11 @@ if ($ConfigureForSPFxDevelopment)
 }
 
 if ($ConfigureForReactMSTDevelopment) {
+    #Need jq to do some json file manipulations
+    # Will manage node versions with Node Version Manager (nvm)
+    choco install -y --allow-empty-checksums nvm jq
+
+    #set version of Node and NPM
     nvm install 9.5.0
     nvm use 9.5.0
     RefreshEnv.cmd
@@ -378,7 +383,13 @@ if ($ConfigureForReactMSTDevelopment) {
     # Mobx State Tree https://github.com/mobxjs/mobx-state-tree
     # React Form https://github.com/react-tools/react-form
     yarn add --dev mobx mobx-react mobx-state-tree babel-plugin-transform-decorators-legacy react-form
-
+    if (Test-Path ".babelrc")
+    {
+        type .\.babelrc | jq '. += {\"plugins\":[\"transform-decorators-legacy\"]}'
+    }
+    else {
+        echo '{"plugins":["transform-decorators-legacy"]}' >>".babelrc"
+    }
 }
 
 # Install Office 365 32 bit, no choco package for 64bit found
