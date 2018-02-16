@@ -21,13 +21,14 @@ Version 1.02
 
 
 ChangeLog
-1.02
+1.03
 Modified
 - Move installation of chocolatey to a switchable parameter $InstallChocolatey
 - Move installation of basic tools to a switchable parameter $InstallBasicTools
 
 Add
 - Configuration and initial template for React/Mobx-State-Tree web application
+- Add VS code extension to prettify JSON
 
 1.01
 Add
@@ -226,7 +227,10 @@ if ($InstallVisualStudioCode) {
     Write-Host "Adding Visual Studio Code Prettier extension..." -BackgroundColor Magenta -ForegroundColor Black
     code --install-extension esbenp.prettier-vscode
     Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
-}
+    Write-Host "Adding Visual Studio Code Prettify JSON extension..." -BackgroundColor Magenta -ForegroundColor Black
+    code --install-extension mohsen1.prettify-json
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
+}   
 
 if ($InstallVisualStudio2017Full){
 
