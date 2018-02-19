@@ -17,7 +17,7 @@ brew install caskroom/cask/firefox
 
 #Install source control
 brew install git
-
+git config --global color.ui auto
 #Install jetbrains toolbox for managing what IDEs installed
 brew install caskroom/cask/jetbrains-toolbox
 

@@ -14,13 +14,16 @@ Script Name: New-ReddiDevWorkstation.ps1
 Purpose: Quick and clean way to setup a simple developer workstation. Tested only for Windows 10. Highly opinionated to tools I would use in my environment.
 Author Nissan Dookeran
 Date 26-10-2017
-Date Last Modified: 16-02-2018
+Date Last Modified: 20-02-2018
 
 
-Version 1.02
+Version 1.021
 
 
 ChangeLog
+1.02.1
+Add 
+-Set git configuration for colored text on diffs
 1.02
 Modified
 - Move installation of chocolatey to a switchable parameter $InstallChocolatey
@@ -169,12 +172,12 @@ ___________                      ________                     .__
  /        \  ___/|  | |  |  /  |_> >   |    |(  <_> |  <_> )  |__                              
 /_______  /\___  >__| |____/|   __/    |____| \____/ \____/|____/                              
         \/     \/           |__|                                                               
- ____    _______   ________                                                                    
-/_   |   \   _  \  \_____  \                                                                   
- |   |   /  /_\  \  /  ____/                                                                   
- |   |   \  \_/   \/       \                                                                   
- |___| /\ \_____  /\_______ \                                                                  
-       \/       \/         \/                                                       
+ ____    _______   ________      ____                                                          
+/_   |   \   _  \  \_____  \    /_   |                                                         
+ |   |   /  /_\  \  /  ____/     |   |                                                         
+ |   |   \  \_/   \/       \     |   |                                                         
+ |___| /\ \_____  /\_______ \ /\ |___|                                                         
+       \/       \/         \/ \/                                                               
 "@
 
 if ($InstallChocolatey) {
@@ -187,6 +190,7 @@ if ($InstallChocolatey) {
 choco feature enable -n allowGlobalConfirmation
 if ($InstallBasicTools) {
     choco install -y --allow-empty-checksums slack googlechrome powershell git postman nvm cmder jq jetbrainstoolbox firefox
+    git config --global color.ui auto
 }
 if ($InstallDocker) {
 #Install Hyper-V Windows Feature (if not yet installed) then install Docker
