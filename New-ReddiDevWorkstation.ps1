@@ -22,6 +22,8 @@ Version 1.021
 
 ChangeLog
 1.02.1
+Modified
+- Update to latest support version of node/npm for SPFx dev configuration
 Add 
 -Set git configuration for colored text on diffs
 1.02
@@ -337,8 +339,8 @@ if ($ConfigureForAngularDevelopment)
 if ($ConfigureForSPFxDevelopment)
 {
    #install latest compatible nodejs and activate
-    nvm install 6.11.5
-    nvm use 6.11.5 #needed for spfx compatibility for now
+    nvm install 8.9.4
+    nvm use 8.9.4 #needed for spfx compatibility for now
     RefreshEnv.cmd
     #The basics: Gulp and Yeoman generator first, then the Microsoft SharePoint generator
     #RefreshEnv doesn't allow code to be found, next line will fix this.
