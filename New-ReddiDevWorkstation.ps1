@@ -15,43 +15,37 @@ Purpose: Quick and clean way to setup a simple developer workstation. Tested onl
 Author Nissan Dookeran
 Date 26-10-2017
 Date Last Modified: 20-02-2018
-
-
-Version 1.021
-
+Version 1.03.1
 
 ChangeLog
-1.02.1
+1.03.1
 Modified
 - Update to latest support version of node/npm for SPFx dev configuration
 Add 
 -Set git configuration for colored text on diffs
-1.02
+
+1.03
 Modified
 - Move installation of chocolatey to a switchable parameter $InstallChocolatey
 - Move installation of basic tools to a switchable parameter $InstallBasicTools
 
 Add
 - Configuration and initial template for React/Mobx-State-Tree web application
+- Add VS code extension to prettify JSON
 
 1.01
 Add
 -Add xMing
+
 1.00
-
 Modified 
-
 - Renamed main script to New-ReddiDevWorkstation (since it reflects my personal preferences so much, 
     which makes it "easy" for me, but can't be sure about anyone else whose opinions differ)
 - Parameterized different workloads so you get a base installation of stuff without any switches, 
     but can use switches to install additional tools as needed
-
 - Fix version of node and npm installed to match SPFx compatibility as per MS Docs documentation.
 
-
-
 Add 
-
 - Slack to default installation of tools 
     (because if you're not using some kind of tool to connect to a community, you're not giving back and also not learning efficiently)
 - switch to install Office 365 Pro Plus (32 bit), Slack desktop app as installed
@@ -62,81 +56,49 @@ Add
 - firefox
 - Install Nuget and set PSRepository to Trusted to allow install of Powershell modules more easily
 
-
-
-
 Remove
-
 - fiddler4 (no longer listed as a chocolatey package)
 - powerbi (broken chocolatey installer)
 
-
-
 0.03.5
+Add 
+- docker toolbox for management of containers
+- commands for nvm to install and use latest version available of nodejs
 
-Add docker toolbox for management of containers
-
-Replace nodejs with nvm, so that multiple versions of nodejs can be installed.
-
-Add commands for nvm to install and use latest version available of nodejs
+Modified 
+- Replace nodejs with nvm, so that multiple versions of nodejs can be installed.
 
 0.03.4
-
 Fix
-
-Adjust execution policy to "RemoteSigned" from "Bypass"
+- Adjust execution policy to "RemoteSigned" from "Bypass"
 
 Add
+- jetbrainstoolbox to allow addition of various community IDEs like IntelliJ
 
-jetbrainstoolbox to allow addition of various community IDEs like IntelliJ
-
-Remove
 
 0.03.3
-
 Fix
-
-Issue #6 - Code extensions do not install: Fixed
+- Issue #6 - Code extensions do not install: Fixed
 
 0.03.2
-
 Add
-
-Visual Studio code extensions for C#, Chrome debugging, Powershell
-
-and a Markdown theming kit for VSCode
+- Visual Studio code extensions for C#, Chrome debugging, Powershell and a Markdown theming kit for VSCode
 
 0.03.1
-
 Add
-
-jq
-
-cmder
-
-resharper
-
-Enable chocolatey feature to allows say yes to prompts so won't pause during execution
-
-
+- jq
+- cmder
+- resharper
+- Enable chocolatey feature to allows say yes to prompts so won't pause during execution
 
 0.03 
-
 Remove
-
-officedevtools
-
-
+- officedevtools
 
 Add
-
-Visual Studio full suite reference
-
-SPFx required components
-
-Merge the SPFx script into this one.
-
-
+- Visual Studio full suite reference
+- SPFx required components
+- Merge the SPFx script into this one.
 
 #>
 param(
@@ -156,30 +118,30 @@ param(
 
 )
 Write-Host @"
-___________                      ________                     .__                              
-\_   _____/____    _________.__. \______ \   _______  __ ____ |  |   ____ ______   ___________ 
- |    __)_\__  \  /  ___<   |  |  |    |  \_/ __ \  \/ // __ \|  |  /  _ \\____ \_/ __ \_  __ \
- |        \/ __ \_\___ \ \___  |  |    `   \  ___/\   /\  ___/|  |_(  <_> )  |_> >  ___/|  | \/
-/_______  (____  /____  >/ ____| /_______  /\___  >\_/  \___  >____/\____/|   __/ \___  >__|   
-        \/     \/     \/ \/              \/     \/          \/            |__|        \/       
- __      __             __              __          __  .__                                    
-/  \    /  \___________|  | __  _______/  |______ _/  |_|__| ____   ____                       
-\   \/\/   /  _ \_  __ \  |/ / /  ___/\   __\__  \\   __\  |/  _ \ /    \                      
- \        (  <_> )  | \/    <  \___ \  |  |  / __ \|  | |  (  <_> )   |  \                     
-  \__/\  / \____/|__|  |__|_ \/____  > |__| (____  /__| |__|\____/|___|  /                     
-       \/                   \/     \/            \/                    \/                      
-  _________       __                 ___________           .__                                 
- /   _____/ _____/  |_ __ ________   \__    ___/___   ____ |  |                                
- \_____  \_/ __ \   __\  |  \____ \    |    | /  _ \ /  _ \|  |                                
- /        \  ___/|  | |  |  /  |_> >   |    |(  <_> |  <_> )  |__                              
-/_______  /\___  >__| |____/|   __/    |____| \____/ \____/|____/                              
-        \/     \/           |__|                                                               
- ____    _______   ________      ____                                                          
-/_   |   \   _  \  \_____  \    /_   |                                                         
- |   |   /  /_\  \  /  ____/     |   |                                                         
- |   |   \  \_/   \/       \     |   |                                                         
- |___| /\ \_____  /\_______ \ /\ |___|                                                         
-       \/       \/         \/ \/                                                               
+___________                      ________                                 
+\_   _____/____    _________.__. \______ \   _______  __                  
+ |    __)_\__  \  /  ___<   |  |  |    |  \_/ __ \  \/ /                  
+ |        \/ __ \_\___ \ \___  |  |    `   \  ___/\   /                   
+/_______  (____  /____  >/ ____| /_______  /\___  >\_/                    
+        \/     \/     \/ \/              \/     \/                        
+ __      __             __              __          __  .__               
+/  \    /  \___________|  | __  _______/  |______ _/  |_|__| ____   ____  
+\   \/\/   /  _ \_  __ \  |/ / /  ___/\   __\__  \\   __\  |/  _ \ /    \ 
+ \        (  <_> )  | \/    <  \___ \  |  |  / __ \|  | |  (  <_> )   |  \
+  \__/\  / \____/|__|  |__|_ \/____  > |__| (____  /__| |__|\____/|___|  /
+       \/                   \/     \/            \/                    \/ 
+  _________       __                 ___________           .__            
+ /   _____/ _____/  |_ __ ________   \__    ___/___   ____ |  |           
+ \_____  \_/ __ \   __\  |  \____ \    |    | /  _ \ /  _ \|  |           
+ /        \  ___/|  | |  |  /  |_> >   |    |(  <_> |  <_> )  |__         
+/_______  /\___  >__| |____/|   __/    |____| \____/ \____/|____/         
+        \/     \/           |__|                                          
+ ____    _______  ________      ____                                      
+/_   |   \   _  \ \_____  \    /_   |                                     
+ |   |   /  /_\  \  _(__  <     |   |                                     
+ |   |   \  \_/   \/       \    |   |                                     
+ |___| /\ \_____  /______  / /\ |___|                                     
+       \/       \/       \/  \/                                                                                               
 "@
 
 if ($InstallChocolatey) {
@@ -232,7 +194,10 @@ if ($InstallVisualStudioCode) {
     Write-Host "Adding Visual Studio Code Prettier extension..." -BackgroundColor Magenta -ForegroundColor Black
     code --install-extension esbenp.prettier-vscode
     Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
-}
+    Write-Host "Adding Visual Studio Code Prettify JSON extension..." -BackgroundColor Magenta -ForegroundColor Black
+    code --install-extension mohsen1.prettify-json
+    Write-Host "Done!" -BackgroundColor Green -ForegroundColor Black
+}   
 
 if ($InstallVisualStudio2017Full){
 
@@ -361,6 +326,11 @@ if ($ConfigureForSPFxDevelopment)
 }
 
 if ($ConfigureForReactMSTDevelopment) {
+    #Need jq to do some json file manipulations
+    # Will manage node versions with Node Version Manager (nvm)
+    choco install -y --allow-empty-checksums nvm jq
+
+    #set version of Node and NPM
     nvm install 9.5.0
     nvm use 9.5.0
     RefreshEnv.cmd
@@ -384,7 +354,13 @@ if ($ConfigureForReactMSTDevelopment) {
     # Mobx State Tree https://github.com/mobxjs/mobx-state-tree
     # React Form https://github.com/react-tools/react-form
     yarn add --dev mobx mobx-react mobx-state-tree babel-plugin-transform-decorators-legacy react-form
-
+    if (Test-Path ".babelrc")
+    {
+        type .\.babelrc | jq '. += {\"plugins\":[\"transform-decorators-legacy\"]}'
+    }
+    else {
+        echo '{"plugins":["transform-decorators-legacy"]}' >>".babelrc"
+    }
 }
 
 # Install Office 365 32 bit, no choco package for 64bit found
