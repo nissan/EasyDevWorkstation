@@ -42,21 +42,16 @@ Add
 1.01
 Add
 -Add xMing
+
 1.00
-
 Modified 
-
 - Renamed main script to New-ReddiDevWorkstation (since it reflects my personal preferences so much, 
     which makes it "easy" for me, but can't be sure about anyone else whose opinions differ)
 - Parameterized different workloads so you get a base installation of stuff without any switches, 
     but can use switches to install additional tools as needed
-
 - Fix version of node and npm installed to match SPFx compatibility as per MS Docs documentation.
 
-
-
 Add 
-
 - Slack to default installation of tools 
     (because if you're not using some kind of tool to connect to a community, you're not giving back and also not learning efficiently)
 - switch to install Office 365 Pro Plus (32 bit), Slack desktop app as installed
@@ -67,81 +62,49 @@ Add
 - firefox
 - Install Nuget and set PSRepository to Trusted to allow install of Powershell modules more easily
 
-
-
-
 Remove
-
 - fiddler4 (no longer listed as a chocolatey package)
 - powerbi (broken chocolatey installer)
 
-
-
 0.03.5
+Add 
+- docker toolbox for management of containers
+- commands for nvm to install and use latest version available of nodejs
 
-Add docker toolbox for management of containers
-
-Replace nodejs with nvm, so that multiple versions of nodejs can be installed.
-
-Add commands for nvm to install and use latest version available of nodejs
+Modified 
+- Replace nodejs with nvm, so that multiple versions of nodejs can be installed.
 
 0.03.4
-
 Fix
-
-Adjust execution policy to "RemoteSigned" from "Bypass"
+- Adjust execution policy to "RemoteSigned" from "Bypass"
 
 Add
+- jetbrainstoolbox to allow addition of various community IDEs like IntelliJ
 
-jetbrainstoolbox to allow addition of various community IDEs like IntelliJ
-
-Remove
 
 0.03.3
-
 Fix
-
-Issue #6 - Code extensions do not install: Fixed
+- Issue #6 - Code extensions do not install: Fixed
 
 0.03.2
-
 Add
-
-Visual Studio code extensions for C#, Chrome debugging, Powershell
-
-and a Markdown theming kit for VSCode
+- Visual Studio code extensions for C#, Chrome debugging, Powershell and a Markdown theming kit for VSCode
 
 0.03.1
-
 Add
-
-jq
-
-cmder
-
-resharper
-
-Enable chocolatey feature to allows say yes to prompts so won't pause during execution
-
-
+- jq
+- cmder
+- resharper
+- Enable chocolatey feature to allows say yes to prompts so won't pause during execution
 
 0.03 
-
 Remove
-
-officedevtools
-
-
+- officedevtools
 
 Add
-
-Visual Studio full suite reference
-
-SPFx required components
-
-Merge the SPFx script into this one.
-
-
+- Visual Studio full suite reference
+- SPFx required components
+- Merge the SPFx script into this one.
 
 #>
 param(
