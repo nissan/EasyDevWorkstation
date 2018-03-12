@@ -14,17 +14,23 @@ Script Name: New-ReddiDevWorkstation.ps1
 Purpose: Quick and clean way to setup a simple developer workstation. Tested only for Windows 10. Highly opinionated to tools I would use in my environment.
 Author Nissan Dookeran
 Date 26-10-2017
-Date Last Modified: 20-02-2018
-Version 1.03.1
+Date Last Modified: 12-03-2018
+Version 1.03
 
 ChangeLog
-1.03.1
+
+Version 1.03
+Add
+- Meld (install and configure s merge tool for git)
+- Opinionated Configuration for React using Create-React-App, Mobx-State-Tree + React-Form + Seq
+
+1.02.1
 Modified
 - Update to latest support version of node/npm for SPFx dev configuration
 Add 
 -Set git configuration for colored text on diffs
 
-1.03
+1.02
 Modified
 - Move installation of chocolatey to a switchable parameter $InstallChocolatey
 - Move installation of basic tools to a switchable parameter $InstallBasicTools
@@ -118,30 +124,30 @@ param(
 
 )
 Write-Host @"
-___________                      ________                                 
-\_   _____/____    _________.__. \______ \   _______  __                  
- |    __)_\__  \  /  ___<   |  |  |    |  \_/ __ \  \/ /                  
- |        \/ __ \_\___ \ \___  |  |    `   \  ___/\   /                   
-/_______  (____  /____  >/ ____| /_______  /\___  >\_/                    
-        \/     \/     \/ \/              \/     \/                        
- __      __             __              __          __  .__               
-/  \    /  \___________|  | __  _______/  |______ _/  |_|__| ____   ____  
-\   \/\/   /  _ \_  __ \  |/ / /  ___/\   __\__  \\   __\  |/  _ \ /    \ 
- \        (  <_> )  | \/    <  \___ \  |  |  / __ \|  | |  (  <_> )   |  \
-  \__/\  / \____/|__|  |__|_ \/____  > |__| (____  /__| |__|\____/|___|  /
-       \/                   \/     \/            \/                    \/ 
-  _________       __                 ___________           .__            
- /   _____/ _____/  |_ __ ________   \__    ___/___   ____ |  |           
- \_____  \_/ __ \   __\  |  \____ \    |    | /  _ \ /  _ \|  |           
- /        \  ___/|  | |  |  /  |_> >   |    |(  <_> |  <_> )  |__         
-/_______  /\___  >__| |____/|   __/    |____| \____/ \____/|____/         
-        \/     \/           |__|                                          
- ____    _______  ________      ____                                      
-/_   |   \   _  \ \_____  \    /_   |                                     
- |   |   /  /_\  \  _(__  <     |   |                                     
- |   |   \  \_/   \/       \    |   |                                     
- |___| /\ \_____  /______  / /\ |___|                                     
-       \/       \/       \/  \/                                                                                               
+___________                      ________                     .__                              
+\_   _____/____    _________.__. \______ \   _______  __ ____ |  |   ____ ______   ___________ 
+ |    __)_\__  \  /  ___<   |  |  |    |  \_/ __ \  \/ // __ \|  |  /  _ \\____ \_/ __ \_  __ \
+ |        \/ __ \_\___ \ \___  |  |    `   \  ___/\   /\  ___/|  |_(  <_> )  |_> >  ___/|  | \/
+/_______  (____  /____  >/ ____| /_______  /\___  >\_/  \___  >____/\____/|   __/ \___  >__|   
+        \/     \/     \/ \/              \/     \/          \/            |__|        \/       
+ __      __             __              __          __  .__                                    
+/  \    /  \___________|  | __  _______/  |______ _/  |_|__| ____   ____                       
+\   \/\/   /  _ \_  __ \  |/ / /  ___/\   __\__  \\   __\  |/  _ \ /    \                      
+ \        (  <_> )  | \/    <  \___ \  |  |  / __ \|  | |  (  <_> )   |  \                     
+  \__/\  / \____/|__|  |__|_ \/____  > |__| (____  /__| |__|\____/|___|  /                     
+       \/                   \/     \/            \/                    \/                      
+  _________       __                 ___________           .__                                 
+ /   _____/ _____/  |_ __ ________   \__    ___/___   ____ |  |                                
+ \_____  \_/ __ \   __\  |  \____ \    |    | /  _ \ /  _ \|  |                                
+ /        \  ___/|  | |  |  /  |_> >   |    |(  <_> |  <_> )  |__                              
+/_______  /\___  >__| |____/|   __/    |____| \____/ \____/|____/                              
+        \/     \/           |__|                                                               
+        ____    _______  ________  
+        /_   |   \   _  \ \_____  \ 
+         |   |   /  /_\  \  _(__  < 
+         |   |   \  \_/   \/       \
+         |___| /\ \_____  /______  /
+               \/       \/       \/                                                        
 "@
 
 if ($InstallChocolatey) {
@@ -155,6 +161,10 @@ choco feature enable -n allowGlobalConfirmation
 if ($InstallBasicTools) {
     choco install -y --allow-empty-checksums slack googlechrome powershell git postman nvm cmder jq jetbrainstoolbox firefox
     git config --global color.ui auto
+    choco install -y --allow-empty-checksums meld
+    git config --global merge.tool "meld"
+    git config --global mergetool.meld.path "C:\Program Files (x86)\Meld\Meld.exe"
+
 }
 if ($InstallDocker) {
 #Install Hyper-V Windows Feature (if not yet installed) then install Docker
@@ -328,7 +338,7 @@ if ($ConfigureForSPFxDevelopment)
 if ($ConfigureForReactMSTDevelopment) {
     #Need jq to do some json file manipulations
     # Will manage node versions with Node Version Manager (nvm)
-    choco install -y --allow-empty-checksums nvm jq
+    choco install -y --allow-empty-checksums nvm jq seq
 
     #set version of Node and NPM
     nvm install 9.5.0
@@ -356,10 +366,10 @@ if ($ConfigureForReactMSTDevelopment) {
     yarn add --dev mobx mobx-react mobx-state-tree babel-plugin-transform-decorators-legacy react-form
     if (Test-Path ".babelrc")
     {
-        type .\.babelrc | jq '. += {\"plugins\":[\"transform-decorators-legacy\"]}'
+        Get-Content .\.babelrc | jq '. += {\"plugins\":[\"transform-decorators-legacy\"]}'
     }
     else {
-        echo '{"plugins":["transform-decorators-legacy"]}' >>".babelrc"
+        Write-Output '{"plugins":["transform-decorators-legacy"]}' >>".babelrc"
     }
 }
 

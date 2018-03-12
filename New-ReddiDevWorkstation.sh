@@ -1,4 +1,23 @@
+
 #!/bin/bash
+
+echo "Script Name: New-ReddiDevWorkstation.sh"
+echo "Purpose: Quick and clean way to setup a simple developer workstation."
+echo "Tested only for Mac OSX High Sierra."
+echo "Highly opinionated to tools I use in my environment."
+echo "-----------------------------------"
+echo "Author: Nissan Dookeran <nissan.dookeran@gmail.com>"
+echo "Date Last Modified: 12-03-2018"
+echo "Version 0.02"
+echo "-----------------------------------"
+echo " ChangeLog"
+echo " Add: " 
+echo " Meld as merge tool for git"
+echo "--------------------------------------"
+echo " Easy Developer Workstation Setup Tool For Mac 0.02"
+echo "--------------------------------------"
+
+#install Homebrew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
 #Install mac-specific build tools
@@ -18,6 +37,11 @@ brew install caskroom/cask/firefox
 #Install source control
 brew install git
 git config --global color.ui auto
+#Install meld as git merge tool
+brew install caskroom/cask/meld
+git config --global merge.tool "meld"
+git config --global mergetool.meld.path "/usr/local/bin/meld"
+
 #Install jetbrains toolbox for managing what IDEs installed
 brew install caskroom/cask/jetbrains-toolbox
 
