@@ -11,10 +11,14 @@ echo "Date Last Modified: 12-03-2018"
 echo "Version 0.02"
 echo "-----------------------------------"
 echo " ChangeLog"
+echo "0.03"
+echo " Add: " 
+echo " tree as folder tree viewer"
+echo "0.02"
 echo " Add: " 
 echo " Meld as merge tool for git"
 echo "--------------------------------------"
-echo " Easy Developer Workstation Setup Tool For Mac 0.02"
+echo " Easy Developer Workstation Setup Tool For Mac 0.03"
 echo "--------------------------------------"
 
 #install Homebrew
@@ -24,7 +28,7 @@ echo "--------------------------------------"
 xcode-select --install
 
 #install prerequisites
-brew install automake autoconf apple-gcc42 openssl
+brew install automake autoconf apple-gcc42 openssl tree
 
 #install java
 brew cask install java
