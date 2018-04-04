@@ -18,7 +18,11 @@ Date Last Modified: 12-03-2018
 Version 1.03
 
 ChangeLog
-
+Version 1.04
+Modified
+- Rename creating a React App switch 
+Add
+- .Net Core 2.1 Preview + React app template creation optional parameters
 Version 1.03
 Add
 - Meld (install and configure s merge tool for git)
@@ -117,8 +121,10 @@ param(
     [parameter(Mandatory=$false)] [bool] $ConfigureForSPFxDevelopment,
     [parameter(Mandatory=$false)] [bool] $ConfigureForPythonDevelopment,
     [parameter(Mandatory=$false)] [bool] $ConfigureForAngularDevelopment,
-    [parameter(Mandatory=$false)] [bool] $ConfigureForReactMSTDevelopment,
+    [parameter(Mandatory=$false)] [bool] $ConfigureReactApp,
     [parameter(Mandatory=$false)] [string] $NewReactAppName,
+    [parameter(Mandatory=$false)] [bool] $ConfigureDotNetCoreReactApp,
+    [parameter(Mandatory=$false)] [string] $NewDotNetCoreReactAppName,
     [parameter(Mandatory=$false)] [bool] $ConfigureLinuxSubsystem,
     [parameter(Mandatory=$false)] [bool] $InstallOffice32bit
 
@@ -142,12 +148,12 @@ ___________                      ________                     .__
  /        \  ___/|  | |  |  /  |_> >   |    |(  <_> |  <_> )  |__                              
 /_______  /\___  >__| |____/|   __/    |____| \____/ \____/|____/                              
         \/     \/           |__|                                                               
-        ____    _______  ________  
-        /_   |   \   _  \ \_____  \ 
-         |   |   /  /_\  \  _(__  < 
-         |   |   \  \_/   \/       \
-         |___| /\ \_____  /______  /
-               \/       \/       \/                                                        
+ ____    _______      _____                                                                    
+/_   |   \   _  \    /  |  |                                                                   
+ |   |   /  /_\  \  /   |  |_                                                                  
+ |   |   \  \_/   \/    ^   /                                                                  
+ |___| /\ \_____  /\____   |                                                                   
+       \/       \/      |__|                                                             
 "@
 
 if ($InstallChocolatey) {
@@ -335,7 +341,45 @@ if ($ConfigureForSPFxDevelopment)
 
 }
 
-if ($ConfigureForReactMSTDevelopment) {
+
+#Initialize a new dot net core web api backend with React driven frontend
+if ($ConfigureDotNetCoreReactApp) {
+    if (!$NewDotNetCoreReactAppName){
+        $NewDotNetCoreReactAppName = "my-new-app"
+    }
+    #Need jq to do some json file manipulations, seq for logging
+    # Will manage node versions with Node Version Manager (nvm)
+    choco install -y --allow-empty-checksums nvm jq seq
+
+    #set version of Node and NPM
+    nvm install 9.5.0
+    nvm use 9.5.0
+    RefreshEnv.cmd
+
+    #Install .NET Core 2.0
+    choco install dotnetcore-sdk
+    #refresh environment variables
+    env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+    #Install .NET Core 2.1 Preview 
+    #(faster compilation, adds in React creation template)
+    choco upgrade dotnetcore-sdk --pre
+    #refresh environment variables
+    env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+    #create new app with React front end
+    dotnet new react -o $NewDotNetCoreReactAppName
+    Set-Location $NewDotNetCoreReactAppName
+    #install SSL certs for HTTPS
+    dotnet install tool dotnet-dev-certs -g --version 2.1.0-preview-final
+    dotnet-dev-certs https --trust
+
+    #Set ASP.Net environment
+    Set-Variable ASPNETCORE_Environment=Development
+    dotnet build
+    dotnet run
+
+
+}
+if ($ConfigureReactApp) {
     #Need jq to do some json file manipulations
     # Will manage node versions with Node Version Manager (nvm)
     choco install -y --allow-empty-checksums nvm jq seq
