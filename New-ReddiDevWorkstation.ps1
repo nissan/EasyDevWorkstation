@@ -14,10 +14,15 @@ Script Name: New-ReddiDevWorkstation.ps1
 Purpose: Quick and clean way to setup a simple developer workstation. Tested only for Windows 10. Highly opinionated to tools I would use in my environment.
 Author Nissan Dookeran
 Date 26-10-2017
-Date Last Modified: 12-03-2018
-Version 1.03
+Date Last Modified: 01-05-2018
+Version 1.05
 
 ChangeLog
+Version 1.05
+Modified
+- Inserted a refresh to make Git accessible for InstallBasicTools
+- Fixed typos
+
 Version 1.04
 Modified
 - Rename creating a React App switch 
@@ -148,12 +153,12 @@ ___________                      ________                     .__
  /        \  ___/|  | |  |  /  |_> >   |    |(  <_> |  <_> )  |__                              
 /_______  /\___  >__| |____/|   __/    |____| \____/ \____/|____/                              
         \/     \/           |__|                                                               
- ____    _______      _____                                                                    
-/_   |   \   _  \    /  |  |                                                                   
- |   |   /  /_\  \  /   |  |_                                                                  
- |   |   \  \_/   \/    ^   /                                                                  
- |___| /\ \_____  /\____   |                                                                   
-       \/       \/      |__|                                                             
+        ____    _______   .________
+        /_   |   \   _  \  |   ____/
+         |   |   /  /_\  \ |____  \ 
+         |   |   \  \_/   \/       \
+         |___| /\ \_____  /______  /
+               \/       \/       \/                                                           
 "@
 
 if ($InstallChocolatey) {
@@ -166,6 +171,7 @@ if ($InstallChocolatey) {
 choco feature enable -n allowGlobalConfirmation
 if ($InstallBasicTools) {
     choco install -y --allow-empty-checksums slack googlechrome powershell git postman nvm cmder jq jetbrainstoolbox firefox
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
     git config --global color.ui auto
     choco install -y --allow-empty-checksums meld
     git config --global merge.tool "meld"
@@ -294,7 +300,7 @@ if ($InstallPowershellModules)
 
     #Install the Azure Resource Manager and SharePoint PNP Powershell modules
     Install-Module AzureRM -AllowClobber
-    Install-Module SharePointPnPPowerShellOnline -AllowClob
+    Install-Module SharePointPnPPowerShellOnline -AllowClobber
     
 }
 
